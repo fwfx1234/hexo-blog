@@ -26,9 +26,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Setup hexo
-        env:
-          ACTION_DEPLOY_KEY: ${{ secrets.hexo }}
-        run: |
+      env:
+        ACTION_DEPLOY_KEY: ${{ secrets.hexo }}
+      run: |
           mkdir -p ~/.ssh/
           echo "$ACTION_DEPLOY_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
@@ -38,6 +38,6 @@ jobs:
           npm install hexo-cli -g
           npm install
     - name: Hexo deploy
-     run: |
+      run: |
        hexo clean
        hexo d
