@@ -1,3 +1,6 @@
+---
+title: BuildContext相关知识点
+---
 ### BuildContext相关知识点
 
 flutter里经常要用到这个额buildContext，而且一部小心就用翻车了。比如明明有context但是路由跳转就是报错，这里记录下问题吧。

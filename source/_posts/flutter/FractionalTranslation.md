@@ -1,3 +1,6 @@
+---
+title: FractionalTranslation使用百分比来做动画
+---
 #### FractionalTranslation使用百分比来做动画
 
 最近遇到一个从底部弹窗出来的需求，但是弹窗高度是根据child组件的高度确定的，不是很好动态计算，翻CupertinoPageRoute的源码，看他是咋做的，就发现这个SlideTransition组件，里面使用FractionalTranslation来做动画的，支持百分比，刚好适合我的需求。
