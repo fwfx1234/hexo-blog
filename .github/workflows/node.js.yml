@@ -35,6 +35,7 @@ jobs:
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           git config --global user.email "864498233@qq.com"
           git config --global user.name "fwfx1234"
+          npm config set registryhttps://registry.npmjs.org
           npm install hexo-cli -g
           npm install
     - name: Hexo deploy
