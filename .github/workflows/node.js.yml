@@ -25,6 +25,19 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm i
-    - run: npx hexo clean
-    - run: npx hexo d
+    - name: Setup hexo
+        env:
+          ACTION_DEPLOY_KEY: ${{ secrets.hexo }}
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$ACTION_DEPLOY_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          git config --global user.email "864498233@qq.com"
+          git config --global user.name "fwfx1234"
+          npm install hexo-cli -g
+          npm install
+    - name: Hexo deploy
+     run: |
+       hexo clean
+       hexo d
