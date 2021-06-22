@@ -104,7 +104,7 @@ theme: stun
 deploy:
   type: git
   repo: git@github.com:fwfx1234/hexo-blog.git
-  branch: main
+  branch: deploy
 # mermaid chart
 mermaid: ## mermaid url https://github.com/knsv/mermaid
   enable: true  # default true
