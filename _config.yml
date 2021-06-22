@@ -103,7 +103,7 @@ theme: stun
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: git@github.com:fwfx1234/hexo-blog.git
+  repo: git@github.com:fwfx1234/fwfx1234.github.io.git
   branch: deploy
 # mermaid chart
 mermaid: ## mermaid url https://github.com/knsv/mermaid
