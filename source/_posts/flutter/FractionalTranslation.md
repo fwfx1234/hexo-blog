@@ -1,5 +1,7 @@
 ---
 title: FractionalTranslation使用百分比来做动画
+categories:
+    - flutter
 ---
 #### FractionalTranslation使用百分比来做动画
 

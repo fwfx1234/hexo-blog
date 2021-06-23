@@ -1,7 +1,11 @@
 ---
 title: transform-runtime作用
+categories:
+    - javascript
+tags: 
+    - babel
 ---
-
+### babel
 babel插件太多了，但是又不是经常需要配置这个，时间久了总是容易忘记啥插件干啥，记录一下。
 
 ### transform-runtime作用

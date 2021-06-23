@@ -8,12 +8,12 @@ subtitle: ''
 description: ''
 keywords:
 author: fwfx1234
-language: zh
-timezone: ''
+language: zh-CN
+timezone: 'Asia/Shanghai'
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://www.fwfx1234.cn
+url: https://fwfx1234.github.io
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -105,14 +105,11 @@ deploy:
   type: git
   repo: git@github.com:fwfx1234/fwfx1234.github.io.git
   branch: gh-pages
-# mermaid chart
-mermaid: ## mermaid url https://github.com/knsv/mermaid
-  enable: true  # default true
-  version: "8.10.2" # default v7.1.2
-  options:  # find more api options from https://github.com/knsv/mermaid/blob/master/src/mermaidAPI.js
-    #startOnload: true  // default true
+
 excerpt:
-  depth: 5
+  depth: 3
   excerpt_excludes: []
   more_excludes: []
   hideWholePostExcerpts: true
+
+
