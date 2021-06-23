@@ -40,7 +40,7 @@ jobs:
           npm config set registry  https://registry.npmjs.org
           npm install hexo-cli -g
           npm install
-          echo "$ACTION_GITALK_KEY" >> ./source/_data/stun.yml
+          echo "  client_secret: $ACTION_GITALK_KEY" >> ./source/_data/stun.yml
     - name: Hexo deploy
       run: |
        hexo clean
