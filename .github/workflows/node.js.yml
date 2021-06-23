@@ -41,7 +41,7 @@ jobs:
           npm install hexo-cli -g
           npm install
           echo "$GITALK_KEY" >> ./source/_data/stun.yml
-          echo ./source/_data/stun.yml
+          cat ./source/_data/stun.yml
     - name: Hexo deploy
       run: |
        hexo clean
