@@ -1022,14 +1022,14 @@ gitalk:
   # Github 用户名
   owner: fwfx1234
   # Github 仓库名（需要是公开的仓库）
-  repo: git@github.com:fwfx1234/fwfx1234.github.io.git
+  repo: https://github.com/fwfx1234/fwfx1234.github.io.git
   # Github 应用程序客户端 ID
   client_id: c8ae93514f1c09d5bb15
   # Github 应用程序客户端密钥
   # GitHub 仓库所有者和合作者，只有这些人可以初始化 Gitalk
   admin: fwfx1234
   # 类似于 B 站的关灯模式
-  distraction_free_mode: true
+  distraction_free_mode: false
   # 如果你想让每一个参观你网站的人看到统一的语言，你可以在这里设置，
   # 可选值：en, zh-CN, es-ES, fr, ru, zh-TW
   language: zh-CN
