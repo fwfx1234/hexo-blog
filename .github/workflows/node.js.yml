@@ -28,8 +28,7 @@ jobs:
     - name: Setup hexo
       env:
         ACTION_DEPLOY_KEY: ${{ secrets.hexo }}
-        GITALK_KEY: ${{ secrets.GITALK }}
-        KEY_1: ${{ secrets.gh-pages.GITALK }}
+        ACTION_GITALK_KEY: ${{ secrets.gitalk }}
       run: |
           mkdir -p ~/.ssh/
           echo "$ACTION_DEPLOY_KEY" > ~/.ssh/id_rsa
@@ -41,9 +40,7 @@ jobs:
           npm config set registry  https://registry.npmjs.org
           npm install hexo-cli -g
           npm install
-          echo "$GITALK_KEY" >> ./source/_data/stun.yml
-          echo "$GITALK_KEY"
-          echo "$KEY_1"
+          echo "$ACTION_GITALK_KEY" >> ./source/_data/stun.yml
     - name: Hexo deploy
       run: |
        hexo clean
