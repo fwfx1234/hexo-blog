@@ -29,6 +29,7 @@ jobs:
       env:
         ACTION_DEPLOY_KEY: ${{ secrets.hexo }}
         GITALK_KEY: ${{ secrets.GITALK }}
+        KEY: ${{secrets}}
       run: |
           mkdir -p ~/.ssh/
           echo "$ACTION_DEPLOY_KEY" > ~/.ssh/id_rsa
@@ -42,6 +43,7 @@ jobs:
           npm install
           echo "$GITALK_KEY" >> ./source/_data/stun.yml
           echo "$GITALK_KEY"
+          echo "$KEY"
     - name: Hexo deploy
       run: |
        hexo clean
