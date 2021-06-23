@@ -1022,7 +1022,7 @@ gitalk:
   # Github 用户名
   owner: fwfx1234
   # Github 仓库名（需要是公开的仓库）
-  repo: https://github.com/fwfx1234/fwfx1234.github.io.git
+  repo: fwfx1234.github.io
   # Github 应用程序客户端 ID
   client_id: c8ae93514f1c09d5bb15
   # Github 应用程序客户端密钥
