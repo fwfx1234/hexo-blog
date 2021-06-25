@@ -107,7 +107,7 @@ deploy:
   branch: gh-pages
 
 excerpt:
-  depth: 3
+  depth: 4
   excerpt_excludes: []
   more_excludes: []
   hideWholePostExcerpts: true

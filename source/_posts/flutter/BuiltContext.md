@@ -8,8 +8,7 @@ categories:
 
 flutter里经常要用到这个额buildContext，而且一部小心就用翻车了。比如明明有context但是路由跳转就是报错，这里记录下问题吧。
 
-
-
+### of操作
 在flutter里使用`Navigator.of(context)` 这种api的时候，这个of操作其实是根据context向上寻找NavigatorState，所以我们要拿到Navigator下面的context才能找到NavigatorState，进而调用上面的各种方法。`MediaQuery`, `Scaffold` 都是这个样子的。所以在MyApp里存一个全局context不一定能去跳转路由。 只有在Navigator组件下面的buildContext才行，MaterialApp在构建的时候，内部会使用Navigator， 所以在onGenerateRoute 返回的Route里的context可以拿来跳转。
 
 
