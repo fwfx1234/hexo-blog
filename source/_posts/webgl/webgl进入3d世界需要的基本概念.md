@@ -1,5 +1,6 @@
 ---
 title: webgl进入3d世界需要的基本概念
+date: 2021-06-23 14:14:01
 categories:
     - webgl
 ---
