@@ -1,0 +1,109 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.2" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.2" type="image/png" sizes="32x32"><meta name="description" content="BuildContext相关知识点        flutter里经常要用到这个额buildContext，而且一部小心就用翻车了。比如明明有context但是路由跳转就是报错，这里记录下问题吧。                      of操作        在flutter里使用Navigator.of(context) 这种api的时候，这个of操">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BuildContext相关知识点">
+<meta property="og:url" content="https://fwfx1234.github.io/2021/06/23/flutter/BuiltContext/index.html">
+<meta property="og:site_name" content="fwfx1234的博客">
+<meta property="og:description" content="BuildContext相关知识点        flutter里经常要用到这个额buildContext，而且一部小心就用翻车了。比如明明有context但是路由跳转就是报错，这里记录下问题吧。                      of操作        在flutter里使用Navigator.of(context) 这种api的时候，这个of操">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-23T06:14:01.000Z">
+<meta property="article:modified_time" content="2022-05-05T02:47:10.068Z">
+<meta property="article:author" content="fwfx1234">
+<meta name="twitter:card" content="summary"><title>BuildContext相关知识点 | fwfx1234的博客</title><link ref="canonical" href="https://fwfx1234.github.io/2021/06/23/flutter/BuiltContext/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: undefined,
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":true},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: false,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">BuildContext相关知识点</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon" data-popover="发表时间" data-popover-pos="up"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__value">2021-06-23</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon" data-popover="修改时间" data-popover-pos="up"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__value">2022-05-05</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon" data-popover="字数统计" data-popover-pos="up"><i class="far fa-file-word"></i></span><span class="post-meta-item__value">458</span></span></div></header><div class="post-body">
+        <h3 id="buildcontext相关知识点"   >
+          <a href="#buildcontext相关知识点" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#buildcontext相关知识点"></a> BuildContext相关知识点</h3>
+      
+<p>flutter里经常要用到这个额buildContext，而且一部小心就用翻车了。比如明明有context但是路由跳转就是报错，这里记录下问题吧。</p>
+
+        <h3 id="of操作"   >
+          <a href="#of操作" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#of操作"></a> of操作</h3>
+      
+<p>在flutter里使用<code>Navigator.of(context)</code> 这种api的时候，这个of操作其实是根据context向上寻找NavigatorState，所以我们要拿到Navigator下面的context才能找到NavigatorState，进而调用上面的各种方法。<code>MediaQuery</code>, <code>Scaffold</code> 都是这个样子的。所以在MyApp里存一个全局context不一定能去跳转路由。 只有在Navigator组件下面的buildContext才行，MaterialApp在构建的时候，内部会使用Navigator， 所以在onGenerateRoute 返回的Route里的context可以拿来跳转。</p>
+
+        <h3 id="builder组件"   >
+          <a href="#builder组件" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#builder组件"></a> Builder组件</h3>
+      
+<figure class="highlight dart"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Builder</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  <span class="comment">/// <span class="markdown">Creates a widget that delegates its build to a callback.</span></span></span><br><span class="line">  <span class="comment">///</span></span><br><span class="line">  <span class="comment">/// <span class="markdown">The [builder] argument must not be null.</span></span></span><br><span class="line">  <span class="keyword">const</span> Builder(&#123;</span><br><span class="line">    Key? key,</span><br><span class="line">    <span class="keyword">required</span> <span class="keyword">this</span>.builder,</span><br><span class="line">  &#125;) : <span class="keyword">assert</span>(builder != <span class="keyword">null</span>),</span><br><span class="line">       <span class="keyword">super</span>(key: key);</span><br><span class="line"></span><br><span class="line">  <span class="comment">/// <span class="markdown">Called to obtain the child widget.</span></span></span><br><span class="line">  <span class="comment">///</span></span><br><span class="line">  <span class="comment">/// <span class="markdown">This function is called whenever this widget is included in its parent&#x27;s</span></span></span><br><span class="line">  <span class="comment">/// <span class="markdown">build and the old widget (if any) that it synchronizes with has a distinct</span></span></span><br><span class="line">  <span class="comment">/// <span class="markdown">object identity. Typically the parent&#x27;s build method will construct</span></span></span><br><span class="line">  <span class="comment">/// <span class="markdown">a new tree of widgets and so a new Builder child will not be [identical]</span></span></span><br><span class="line">  <span class="comment">/// <span class="markdown">to the corresponding old one.</span></span></span><br><span class="line">  <span class="keyword">final</span> WidgetBuilder builder;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) =&gt; builder(context);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+<p>我们可以通过Builder组件来获取Builder组件的context, 我们日常开发中经常使用一个页面的顶层context对象。例如</p>
+<figure class="highlight dart"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Page</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> Scaffold(</span><br><span class="line">      appBar: AppBar(),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+<p>这个时候你使用这个context是不能正常调用Scaffold.of(context).openDrawer()的，因为context不再scaffold组件的下面，of方法也就找不到对应的对象，所以可以在Scaffold下面的任意组件上使用Builder获得对应context，然后通过这个context来调用Scaffold.of(context)，就能正常找到ScaffoldState了。</p>
+<blockquote>
+<p><strong>BuildContext</strong>objects are actually <strong>Element</strong> objects. The <strong>BuildContext</strong>interface is used to discourage direct manipulation of <strong>Element</strong> objects.</p>
+</blockquote>
+<p>官方说builfContext 实际上是Element对象。</p>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/06/23/README/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">介绍</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2021/06/23/flutter/FractionalTranslation/"><span class="paginator-prev__text">FractionalTranslation使用百分比来做动画</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div><div class="comments" id="comments"><div id="gitalk-container"></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#buildcontext%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-number">1.</span> <span class="toc-text">
+           BuildContext相关知识点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#of%E6%93%8D%E4%BD%9C"><span class="toc-number">2.</span> <span class="toc-text">
+           of操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#builder%E7%BB%84%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">
+           Builder组件</span></a></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/icons/icon.png" alt="avatar"></div><p class="sidebar-ov-author__text">fwfx1234</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/fwfx1234" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">13</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">4</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">4</div><div class="sidebar-ov-state-item__name">标签</div></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2022</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>fwfx1234</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v5.4.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.2</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><link href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" rel="stylesheet" type="text/css"><link href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/copy-tex.css" rel="stylesheet" type="text/css"><script src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/js-md5@latest/src/md5.min.js"></script><script>function loadGitalk () {
+  if (!document.getElementById('gitalk-container')) {
+    return;
+  }
+
+  var gitalk = new Gitalk({
+    id: md5(window.location.pathname.slice(1)),
+    clientID: 'c8ae93514f1c09d5bb15',
+    clientSecret: '943df9b96de2ff13e8235c9cea14215dbe036e5a',
+    repo: 'fwfx1234.github.io',
+    owner: 'fwfx1234',
+    admin: ['fwfx1234'],
+    distractionFreeMode: 'false',
+    language: 'zh-CN'
+  });
+  gitalk.render('gitalk-container');
+}
+
+if (false) {
+  loadGitalk();
+} else {
+  window.addEventListener('DOMContentLoaded', loadGitalk, false);
+}</script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script><script>console.log('xx')</script><script src="https://cdn.jsdelivr.net/npm/mermaid@8.10.2/dist/mermaid.min.js"></script><script>window.addEventListener('load', function(){
+   if (window.mermaid) {
+    mermaid.initialize({theme: 'forest'});
+   }
+   let graphs = document.querySelectorAll('.mermaid')
+   graphs.forEach(it => {
+      it.onclick = function() {
+         let dom = document.createElement('div')
+         dom.style.position = 'fixed'
+         dom.style.top = 0
+         dom.style.left = 0
+         dom.style.right = 0
+         dom.style.bottom = 0
+         dom.style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
+         dom.style.overflowY='scroll'
+         let cloneNode = it.cloneNode(true)
+         cloneNode.style.backgroundColor = "#fff"
+         cloneNode.style.width="80vw"
+         cloneNode.style.margin="80px auto"
+         cloneNode.style.textAlign="center"
+         dom.appendChild(cloneNode)
+         dom.onclick = function() {
+            document.body.removeChild(dom)
+         }
+         document.body.appendChild(dom)
+      }
+   })
+})</script><script>console.log('xx')</script></body></html>

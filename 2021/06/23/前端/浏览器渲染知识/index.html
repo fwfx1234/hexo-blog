@@ -1,0 +1,161 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.2" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.2" type="image/png" sizes="32x32"><meta name="description" content="浏览器渲染的相关的知识        浏览器渲染有一些零碎的知识点，不常用经常忘记，写个文档记录下。                      浏览器渲染流程        浏览器渲染的过程主要包括以下五步：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浏览器渲染的相关的知识">
+<meta property="og:url" content="https://fwfx1234.github.io/2021/06/23/%E5%89%8D%E7%AB%AF/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:site_name" content="fwfx1234的博客">
+<meta property="og:description" content="浏览器渲染的相关的知识        浏览器渲染有一些零碎的知识点，不常用经常忘记，写个文档记录下。                      浏览器渲染流程        浏览器渲染的过程主要包括以下五步：">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-23T06:14:01.000Z">
+<meta property="article:modified_time" content="2022-05-05T02:47:10.068Z">
+<meta property="article:author" content="fwfx1234">
+<meta name="twitter:card" content="summary"><title>浏览器渲染的相关的知识 | fwfx1234的博客</title><link ref="canonical" href="https://fwfx1234.github.io/2021/06/23/%E5%89%8D%E7%AB%AF/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E7%9F%A5%E8%AF%86/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: undefined,
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":true},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: false,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">浏览器渲染的相关的知识</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon" data-popover="发表时间" data-popover-pos="up"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__value">2021-06-23</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon" data-popover="修改时间" data-popover-pos="up"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__value">2022-05-05</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon" data-popover="字数统计" data-popover-pos="up"><i class="far fa-file-word"></i></span><span class="post-meta-item__value">837</span></span></div></header><div class="post-body">
+        <h3 id="浏览器渲染的相关的知识"   >
+          <a href="#浏览器渲染的相关的知识" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#浏览器渲染的相关的知识"></a> 浏览器渲染的相关的知识</h3>
+      
+<p>浏览器渲染有一些零碎的知识点，不常用经常忘记，写个文档记录下。</p>
+
+        <h4 id="浏览器渲染流程"   >
+          <a href="#浏览器渲染流程" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#浏览器渲染流程"></a> 浏览器渲染流程</h4>
+      
+<p>浏览器渲染的过程主要包括以下五步：</p>
+<ol>
+<li>浏览器将获取的HTML文档解析成DOM树。</li>
+<li>处理CSS标记，构成层叠样式表模型CSSOM(Styles Tree)。</li>
+<li>将DOM和CSSOM合并为渲染树(render tree)，代表一系列将被渲染的对象。</li>
+<li>渲染树的每个元素包含的内容都是计算过的，它被称之为布局layout。浏览器使用一种流式处理的方法，只需要一次绘制操作就可以布局所有的元素。</li>
+<li>将渲染树的各个节点绘制到屏幕上，这一步被称为绘制painting。</li>
+</ol>
+
+        <h4 id="渲染流程图"   >
+          <a href="#渲染流程图" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#渲染流程图"></a> 渲染流程图</h4>
+      
+<pre class="mermaid">graph LR
+    html(HTML) --> html_parser[HTML Parser];
+    html_parser --> dom(DOM tree);
+
+    css(CSS) --> css_parser[CSS Parser];
+    css_parser --> styles[Styles Tree];
+
+    attachment[混合]
+    dom --> attachment
+    styles --> attachment
+    
+    attachment --> render[Render Tree]
+    reflow[Reflow] <--> render
+ 
+    render --> painting[绘制] --> display[显示]</pre>
+<p>渲染流程基本上就是上流程图，但是中间有几个注意的点。</p>
+<ol>
+<li>文档的解析是流式解析，也就是说接收到文本之后就开始解析，不需要等文档接收完。</li>
+<li>javascript的加载是会阻塞文档的解析，遇到javascript脚本，会加载完并执行，可以用async和defer来改成异步的，defer不阻塞文档，会等文档解析完之后执行。async只有下载的时候是异步的，下载完立马执行。默认情况下载都会阻塞文档解析。</li>
+<li>css解析不阻塞文本，但是css的解析会对脚本产生影响。javascript在css解析的时候，如果需要访问正在解析的styles的话，脚本会被禁用 。</li>
+</ol>
+
+        <h4 id="回流和重绘"   >
+          <a href="#回流和重绘" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#回流和重绘"></a> 回流和重绘</h4>
+      
+
+        <h5 id="重绘"   >
+          <a href="#重绘" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#重绘"></a> 重绘</h5>
+      
+<p>在元素改变了外观但是没改变尺寸的时候，比如背景颜色，文字颜色等，这个时候文档不需要重新计算布局，只需要将改变的元素重新绘制就行。</p>
+
+        <h5 id="回流reflow"   >
+          <a href="#回流reflow" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#回流reflow"></a> 回流(reflow)</h5>
+      
+<p>dom在第一次绘制的时候和元素改变了尺寸或者布局的时候，如更换字体，修改元素大小等操作，由于尺寸的改变，浏览器需要重新计算元素的尺寸重新布局，然就再绘制,这过程叫回流。下面这些情况会导致回流。</p>
+<ol>
+<li>添加或删除可见的DOM元素</li>
+<li>元素的尺寸发生变化（包括外边距、内边框、边框大小等等）</li>
+<li>元素的位置发生变化</li>
+<li>页面一开始渲染的时候</li>
+<li>浏览器的窗口尺寸变化（因为回流是根据视口的大小来计算元素的位置和大小的）</li>
+<li>读取offset相关属性(offsetHeight, offsetHeight等)，浏览器会重新布局以得到精确的数据。</li>
+</ol>
+<p>减少回流</p>
+<ol>
+<li>避免逐项更改样式。最好一次性更改style属性，或者将样式列表定义为class并一次性更改class属性。</li>
+<li>避免循环操作DOM。创建一个documentFragment或div，在它上面应用所有DOM操作，最后再把它添加到 window.document。</li>
+<li>避免多次读取offsetLeft等属性。无法避免则将它们缓存到变量。</li>
+<li>将复杂的元素绝对定位或固定定位，使它脱离文档流。否则回流代价十分高</li>
+</ol>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/06/23/%E5%89%8D%E7%AB%AF/%E5%8E%9F%E5%9E%8B%E9%93%BE%E7%9A%84%E6%80%BB%E7%BB%93/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">javascript原型链</span></a></div></nav></footer></div></div><div class="comments" id="comments"><div id="gitalk-container"></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E7%9A%84%E7%9B%B8%E5%85%B3%E7%9A%84%E7%9F%A5%E8%AF%86"><span class="toc-number">1.</span> <span class="toc-text">
+           浏览器渲染的相关的知识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">
+           浏览器渲染流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="toc-number">1.2.</span> <span class="toc-text">
+           渲染流程图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%9E%E6%B5%81%E5%92%8C%E9%87%8D%E7%BB%98"><span class="toc-number">1.3.</span> <span class="toc-text">
+           回流和重绘</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%87%8D%E7%BB%98"><span class="toc-number">1.3.1.</span> <span class="toc-text">
+           重绘</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9B%9E%E6%B5%81reflow"><span class="toc-number">1.3.2.</span> <span class="toc-text">
+           回流(reflow)</span></a></li></ol></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/icons/icon.png" alt="avatar"></div><p class="sidebar-ov-author__text">fwfx1234</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/fwfx1234" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">13</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">4</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">4</div><div class="sidebar-ov-state-item__name">标签</div></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2022</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>fwfx1234</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v5.4.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.2</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><link href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" rel="stylesheet" type="text/css"><link href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/copy-tex.css" rel="stylesheet" type="text/css"><script src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/js-md5@latest/src/md5.min.js"></script><script>function loadGitalk () {
+  if (!document.getElementById('gitalk-container')) {
+    return;
+  }
+
+  var gitalk = new Gitalk({
+    id: md5(window.location.pathname.slice(1)),
+    clientID: 'c8ae93514f1c09d5bb15',
+    clientSecret: '943df9b96de2ff13e8235c9cea14215dbe036e5a',
+    repo: 'fwfx1234.github.io',
+    owner: 'fwfx1234',
+    admin: ['fwfx1234'],
+    distractionFreeMode: 'false',
+    language: 'zh-CN'
+  });
+  gitalk.render('gitalk-container');
+}
+
+if (false) {
+  loadGitalk();
+} else {
+  window.addEventListener('DOMContentLoaded', loadGitalk, false);
+}</script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script><script>console.log('xx')</script><script src="https://cdn.jsdelivr.net/npm/mermaid@8.10.2/dist/mermaid.min.js"></script><script>window.addEventListener('load', function(){
+   if (window.mermaid) {
+    mermaid.initialize({theme: 'forest'});
+   }
+   let graphs = document.querySelectorAll('.mermaid')
+   graphs.forEach(it => {
+      it.onclick = function() {
+         let dom = document.createElement('div')
+         dom.style.position = 'fixed'
+         dom.style.top = 0
+         dom.style.left = 0
+         dom.style.right = 0
+         dom.style.bottom = 0
+         dom.style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
+         dom.style.overflowY='scroll'
+         let cloneNode = it.cloneNode(true)
+         cloneNode.style.backgroundColor = "#fff"
+         cloneNode.style.width="80vw"
+         cloneNode.style.margin="80px auto"
+         cloneNode.style.textAlign="center"
+         dom.appendChild(cloneNode)
+         dom.onclick = function() {
+            document.body.removeChild(dom)
+         }
+         document.body.appendChild(dom)
+      }
+   })
+})</script><script>console.log('xx')</script></body></html>
